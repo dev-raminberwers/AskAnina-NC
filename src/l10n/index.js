@@ -64,15 +64,16 @@ function lookup(locale, text) {
 }
 
 /**
- * Vertaal een Engelse tekst. `%s` en `%1$s`-achtige plekken worden ingevuld
- * met de extra argumenten, in volgorde.
+ * Vertaal een Engelse tekst. `%s` wordt ingevuld met de extra argumenten in
+ * volgorde; `%1$s` en `%2$s` met het argument van DAT nummer, zodat een
+ * vertaling de volgorde mag omdraaien ("Zodat je om %2$s bij %1$s bent").
  */
 export function t(text, ...args) {
 	let out = lookup(currentLocale(), text)
 	if (out == null) out = text
 	if (args.length) {
 		let i = 0
-		out = out.replace(/%(\d+\$)?[sd]/g, () => String(args[i++] ?? ''))
+		out = out.replace(/%(?:(\d+)\$)?[sd]/g, (_, n) => String((n ? args[n - 1] : args[i++]) ?? ''))
 	}
 	return out
 }
