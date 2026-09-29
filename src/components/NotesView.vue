@@ -77,7 +77,8 @@ import { foutTekst } from '../api/fouten.js'
 import { watch } from 'vue'
 import { staat as sync } from '../api/sync.js'
 
-function ontsmet(s) { return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;') }
+/* Ook de aanhalingstekens: een link komt in href="…", en een " in de notitie mag daar niet uit breken. */
+function ontsmet(s) { return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#39;') }
 
 /**
  * Een klein beetje Markdown, genoeg voor notities: koppen, vet, cursief,

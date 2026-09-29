@@ -8,11 +8,11 @@
 				{{ heeftSter(open) ? '★' : '☆' }}
 			</button>
 			<img :src="nieuwsBeeld(open.image || extraBeeld[open.link])" alt="" class="pa-rss__foto">
-			<h2 class="pa-rss__kop"><a :href="open.link" target="_blank" rel="noopener">{{ open.title }}</a></h2>
+			<h2 class="pa-rss__kop"><a :href="veiligeLink(open.link)" target="_blank" rel="noopener">{{ open.title }}</a></h2>
 			<div class="pa-rss__meta">{{ open.feedTitle }}<template v-if="open.published"> · {{ datum(open.published) }}</template></div>
-			<div v-if="open.content" class="pa-rss__inhoud" v-html="open.content" />
+			<div v-if="open.content" class="pa-rss__inhoud" v-html="veiligeHtml(open.content)" />
 			<p v-else class="pa-rss__inhoud">{{ open.summary }}</p>
-			<a :href="open.link" target="_blank" rel="noopener" class="pa-rss__origineel">{{ t('Read the original') }} ↗</a>
+			<a :href="veiligeLink(open.link)" target="_blank" rel="noopener" class="pa-rss__origineel">{{ t('Read the original') }} ↗</a>
 		</div>
 
 		<template v-else>
@@ -86,6 +86,7 @@ import NcLoadingIcon from '@nextcloud/vue/components/NcLoadingIcon'
 import { watch } from 'vue'
 import { staat as sync, gingOver } from '../api/sync.js'
 import { nieuwsBeeld } from '../api/aninaBeeld.js'
+import { veiligeHtml, veiligeLink } from '../api/veiligHtml.js'
 import { meld as meldTelling } from '../api/tellingen.js'
 
 export default {
@@ -151,6 +152,8 @@ export default {
 	},
 	methods: {
 		nieuwsBeeld,
+		veiligeHtml,
+		veiligeLink,
 		t(...args) { return t(...args) },
 		datum(iso) {
 			const d = new Date(iso)
