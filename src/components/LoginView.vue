@@ -1,7 +1,7 @@
 <template>
 	<div class="pa-login">
 		<div class="pa-login__card">
-			<h2>AskAnina</h2>
+			<h2 class="pa-login__titel">AskAnina</h2>
 
 			<!-- Stap 2: tweestapsverificatie (alleen als het account dat aan heeft). -->
 			<template v-if="pendingToken">
@@ -50,6 +50,8 @@
 				<p class="pa-login__sub"><a :href="registerUrl" target="_blank" rel="noopener">{{ t('No code yet? Create an account') }}</a></p>
 			</template>
 		</div>
+		<!-- Anina rechts van de kaart: PA_left kijkt naar links, dus naar de kaart toe (Ramin, 29-09). -->
+		<img :src="aninaBeeld" alt="" class="pa-login__anina" @error="$event.target.style.display = 'none'">
 	</div>
 </template>
 
@@ -63,6 +65,7 @@ import FoutMelding from './FoutMelding.vue'
 import { setAccessCode, setLocked, getLoginEmail, setLoginEmail } from '../api/accessCode.js'
 import { checkApiCode, loginEmail, loginVerify2fa, twoFactorSetup, twoFactorConfirm, passkeyLogin, passkeySupported } from '../api/paApi.js'
 import qrcode from '../vendor/qrcode.min.js'
+import { ANINA_INLOG } from '../api/aninaBeeld.js'
 
 /** Inloggen in de web-jas: met e-mail + wachtwoord (standaard) of met de USER-API-code. */
 export default {
@@ -78,6 +81,7 @@ export default {
 			modus: 'email', email: getLoginEmail(), wachtwoord: '', code: '', totp: '', pendingToken: null, instellen: null, wachtendeCode: null,
 			status: null, error: null, busy: false, registerUrl: '../?p=register',
 			passkeys: passkeySupported(), passkeyFout: false,
+			aninaBeeld: ANINA_INLOG,
 		}
 	},
 	methods: {
@@ -168,9 +172,14 @@ export default {
 </script>
 
 <style scoped>
-.pa-login { min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 16px; box-sizing: border-box; }
-.pa-login__card { width: 100%; max-width: 420px; border: 1px solid var(--color-border); border-radius: 14px; padding: 24px; background: var(--color-main-background); display: flex; flex-direction: column; gap: 8px; }
-.pa-login__sub { color: var(--color-text-maxcontrast); font-size: 0.9em; margin: 0; }
+/* Bescheiden (Ramin, 29-09): een smalle kaart met Anina ernaast, in plaats van één groot wit vlak. */
+.pa-login { min-height: 100vh; display: flex; align-items: center; justify-content: center; gap: 24px; padding: 16px; box-sizing: border-box; }
+.pa-login__card { width: 100%; max-width: 320px; border: 1px solid var(--color-border); border-radius: 12px; padding: 16px 18px; background: var(--color-main-background); box-shadow: 0 2px 10px rgba(0, 0, 0, 0.06); display: flex; flex-direction: column; gap: 8px; }
+.pa-login__titel { margin: 0 0 4px; font-size: 1.25em; }
+.pa-login__sub { color: var(--color-text-maxcontrast); font-size: 0.85em; margin: 0; }
 .pa-login__qr { align-self: center; padding: 10px; background: #fff; border-radius: 12px; }
-.pa-login__qr :deep(svg) { display: block; width: 180px; height: 180px; }
+.pa-login__qr :deep(svg) { display: block; width: 160px; height: 160px; }
+.pa-login__anina { height: min(340px, 55vh); width: auto; flex: none; }
+/* Op een smal scherm is er geen plek naast de kaart; dan alleen de kaart. */
+@media (max-width: 640px) { .pa-login__anina { display: none; } }
 </style>
