@@ -1,0 +1,35 @@
+/* De schermen van Nextcloud vragen om kleurtokens met hún namen. In de web-jas is er geen Nextcloud, dus
+ * vullen we ze zelf -- en wel uit de tokens van Design (zie kaarten.css, overgezet uit site/kaarten.html).
+ *
+ * Ramin, 24-09: *"gebruik ook zelfde css"*. Daarom staat hier geen tweede palet meer naast dat van de
+ * kaarten, maar verwijst elke token naar die ene bron. Verandert Design een kleur, dan verandert de hele
+ * app mee in plaats van alleen de kaarten -- en kan een kaart nooit meer net iets anders wit zijn dan de
+ * achtergrond eromheen.
+ *
+ * De drie thema-standen zitten in kaarten.css: niets op <html> is "volg het apparaat", data-theme=light
+ * of dark is een eigen keuze (zie api/thema.js).
+ */
+:root {
+	--color-main-background: var(--pa-bg);
+	--color-main-text: var(--pa-ink);
+	--color-text-maxcontrast: var(--pa-ink3);
+	--color-border: var(--pa-line);
+	--color-background-hover: var(--pa-surface2);
+	--color-primary-element: var(--pa-navy);
+	--color-primary-element-text: var(--pa-navy-ink);
+	--color-primary-element-light: var(--pa-accent-soft);
+	--color-error: var(--pa-warn);
+	--color-warning: var(--pa-accent);
+	--color-success: var(--pa-ok);
+	--border-radius-large: 12px;
+}
+html, body {
+	margin: 0;
+	background: var(--color-main-background);
+	color: var(--color-main-text);
+	/* Dezelfde letters als de kaarten; Archivo komt uit de Google-koppeling in index.php. */
+	font: 14.5px/1.45 Archivo, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+}
+h2 { font-size: 1.4em; margin: 6px 0 12px; letter-spacing: -.025em; }
+h3 { font-size: 0.85em; text-transform: uppercase; letter-spacing: .06em; color: var(--color-text-maxcontrast); margin: 18px 0 6px; }
+a { color: var(--color-primary-element); }

@@ -1,0 +1,73 @@
+/*
+ * De kaarten binnen Nextcloud: zelfde vorm, maar de kleuren van Nextcloud zelf.
+ *
+ * kaarten.css kiest zijn kleuren op de stand van het besturingssysteem (`prefers-color-scheme`).
+ * Buiten Nextcloud klopt dat -- daar bepaalt de app zijn eigen thema. Binnen Nextcloud niet: die heeft
+ * zijn eigen licht/donker-keuze, en staat die op licht terwijl je systeem op donker staat, dan kreeg je
+ * onze donkere kaart met Nextcloud zijn donkere letters erop. Onleesbaar, gemeten 24-09.
+ *
+ * Daarom leiden we de kleuren hier af van Nextcloud zijn eigen variabelen. De kaart volgt dan vanzelf
+ * elk thema dat de gebruiker daar kiest, ook een zelfgemaakt.
+ *
+ * Op `body` en niet op `:root`, zodat dit wint van de media-query in kaarten.css zonder !important.
+ */
+body {
+	--pa-bg: var(--color-main-background, #fff);
+	--pa-surface: var(--color-main-background, #fff);
+	--pa-surface2: var(--color-background-dark, #f5f5f5);
+	--pa-line: var(--color-border, #ededed);
+
+	--pa-ink: var(--color-main-text, #222);
+	--pa-ink2: var(--color-text-maxcontrast, #6b6b6b);
+	--pa-ink3: var(--color-text-maxcontrast, #6b6b6b);
+
+	/* Het donkere vlak van een afspraak is in Nextcloud de themakleur van de gebruiker. */
+	--pa-navy: var(--color-primary-element, #13294a);
+	--pa-navy-ink: var(--color-primary-element-text, #fff);
+
+	--pa-accent: var(--color-primary-element, #8a6a2c);
+	--pa-accent-soft: var(--color-primary-element-light, #f1e8d7);
+
+	--pa-warn: var(--color-warning, #8a4620);
+	--pa-ok: var(--color-success, #27604a);
+
+	--pa-shadow: var(--color-box-shadow, 0 1px 2px rgba(0, 0, 0, .08));
+}
+
+/* Een afspraak is sinds 27-09 een gewone witte kaart met een gekleurd balkje links, net als op de
+   telefoon. De regel die hier stond zette de tekst op --pa-navy-ink (wit) voor het donkere vlak; dat
+   zou nu wit op wit worden. */
+
+/* De vraag van de planner IN de kaart waar hij over gaat, als gekleurd vlak onderin -- zoals op de
+   telefoon (RegelKaarten.kt regel 2185, Ramin 22-09). Stond op het web als losse kaart ernaast. */
+.pa-vraagvlak {
+	margin-top: 10px;
+	padding: 12px;
+	border-radius: 10px;
+	background: var(--pa-vraag-vlak, rgba(19, 41, 74, 0.07));
+}
+.pa-vraagvlak__zin {
+	font-weight: 600;
+	font-size: 0.95em;
+	margin-bottom: 6px;
+}
+.pa-vraagvlak .acties {
+	border-top: 0;
+	padding-top: 0;
+	margin-top: 0;
+}
+
+/* Hoe het echt ging, op een losse kaart -- zelfde vorm als in een blok. */
+.pa-echt {
+	margin-top: 10px;
+	padding-top: 8px;
+	border-top: 1px solid var(--pa-lijn, rgba(0, 0, 0, 0.08));
+}
+.pa-echt__kop {
+	font-size: 0.8em;
+	opacity: 0.7;
+	margin-bottom: 4px;
+}
+
+/* De rek tussen de app-knop links en "Laat weten" rechts. */
+.pa-rek { flex: 1 1 auto; }

@@ -1,0 +1,75 @@
+<?xml version="1.0"?>
+<info xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:noNamespaceSchemaLocation="https://apps.nextcloud.com/schema/apps/info.xsd">
+    <id>personalassistant</id>
+    <name>Personal Assistant</name>
+    <name lang="nl">Personal Assistant</name>
+
+    <summary>Your day as one timeline: calendar, travel time and flights</summary>
+    <summary lang="nl">Dagelijkse tijdlijn: agenda, reistijd en vluchten in een overzicht</summary>
+
+    <description><![CDATA[
+A daily timeline that brings your Nextcloud calendar together with travel time, flight information and
+check-in reminders — the same planning engine as the Android app, here as a thin Nextcloud app.
+
+**What is sent to our servers, and why**
+
+The planning is calculated on the AskAnina servers (askanina.com), because it needs live route, traffic
+and flight data. To do that, this app sends:
+
+- the appointments of the days it is showing: title, location and times;
+- the addresses you have set as home and work, so travel time can be calculated;
+- the flight numbers in your appointments, to look up delays and gates.
+
+Nothing else leaves your Nextcloud, and nothing is sent unless you have entered an access code.
+
+Route lookups are stored on our side under the coordinates alone, without your name or account. The
+routing provider never sees who you are: it sees our server, not you.
+
+You need an AskAnina account to use this app. Full details, including what is stored and for how long,
+are at https://askanina.com.
+    ]]></description>
+    <description lang="nl"><![CDATA[
+Een dagelijkse tijdlijn die je Nextcloud-agenda samenbrengt met reistijd, vluchtinformatie en
+check-in-herinneringen — dezelfde planning als de Android-app, hier als een dunne Nextcloud-app.
+
+**Wat er naar onze servers gaat, en waarom**
+
+Het plannen gebeurt op de AskAnina-servers (askanina.com), omdat daar live route-, verkeers- en
+vluchtgegevens voor nodig zijn. Daarvoor stuurt deze app:
+
+- de afspraken van de dagen die je bekijkt: titel, plaats en tijden;
+- de adressen die je als thuis en werk hebt ingesteld, om reistijd te kunnen berekenen;
+- de vluchtnummers in je afspraken, om vertragingen en gates op te zoeken.
+
+Verder verlaat er niets je Nextcloud, en er gaat niets weg zolang je geen toegangscode hebt ingevuld.
+
+Opgezochte routes bewaren wij onder alleen de coordinaten, zonder je naam of account. De routedienst
+ziet nooit wie je bent: die ziet onze server, niet jou.
+
+Je hebt een AskAnina-account nodig om deze app te gebruiken. Wat er precies bewaard wordt en hoe lang,
+staat op https://askanina.com.
+    ]]></description>
+
+    <version>0.2.0</version>
+    <licence>AGPL-3.0-or-later</licence>
+    <author>BERWERS innovations doing business as Ramin BERWERS</author>
+    <namespace>PersonalAssistant</namespace>
+    <category>organization</category>
+
+    <website>https://askanina.com</website>
+    <bugs>https://github.com/dev-raminberwers/AskAnina-NC/issues</bugs>
+    <repository>https://github.com/dev-raminberwers/AskAnina-NC</repository>
+
+    <dependencies>
+        <nextcloud min-version="30" max-version="36"/>
+    </dependencies>
+    <navigations>
+        <navigation>
+            <name>Personal Assistant</name>
+            <route>personalassistant.page.index</route>
+            <icon>app.svg</icon>
+            <order>1</order>
+        </navigation>
+    </navigations>
+</info>

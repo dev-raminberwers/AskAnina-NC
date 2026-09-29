@@ -141,3 +141,9 @@ dist
 vite.config.js.timestamp-*
 vite.config.ts.timestamp-*
 .vite/
+
+# --- AskAnina ---
+# De bronkaart van de gebouwde app: 6,9 MB en alleen nuttig bij het debuggen op je eigen machine.
+*.js.map
+# Proefbouwsels van de webpack-varianten; die horen bij het bouwen, niet bij de bron.
+proefbouw/

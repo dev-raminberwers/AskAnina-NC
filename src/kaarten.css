@@ -1,0 +1,275 @@
+/* De letters staan in fonts.css, bij de app zelf: de beveiligingsregel van de web-agenda laat geen
+   stylesheet van buiten toe, en zo gaat er ook geen bezoeker langs Google. Zie scripts/maak_fonts_css.py. */
+@import url('./fonts.css');
+
+/* De kaarten, letterlijk uit site/kaarten.html.
+ *
+ * Ramin, 24-09: *"We moeten de cards maken zoals Android (op kaarten.html vind je veel html) gebruik ook
+ * zelfde css"*. Dit bestand is dus geen nieuw ontwerp maar een overzetting: kaarten.html blijft de bron,
+ * en scratchpad/maak_kaarten_css.py maakt hier opnieuw dit bestand van zodra daar iets verandert.
+ *
+ * Twee mechanische aanpassingen, omdat de app meer op zijn scherm heeft staan dan die demo-pagina:
+ *  - elke selector staat onder .pa-kaarten, zodat korte namen als .kop, .st en .v niets anders raken;
+ *  - elke token heet --pa-..., om dezelfde reden.
+ *
+ * De drie thema-standen komen ook uit kaarten.html en sluiten aan op api/thema.js: niets op <html> is
+ * "volg het apparaat", data-theme=light of dark is een eigen keuze.
+ */
+:root {
+  --pa-bg:#f6f5f1; --pa-surface:#fff; --pa-surface2:#ece9e2; --pa-line:#dbd7cd;
+  --pa-ink:#12171d; --pa-ink2:#4f5a67; --pa-ink3:#7b8592;
+  --pa-navy:#13294a; --pa-navy-ink:#fff;
+  --pa-accent:#8a6a2c; --pa-accent-soft:#f1e8d7;
+  --pa-warn:#8a4620; --pa-ok:#27604a;
+  --pa-shadow:0 1px 2px rgba(19,41,74,.06), 0 12px 28px -18px rgba(19,41,74,.30);
+  color-scheme:light;
+}
+
+@media (prefers-color-scheme:dark){ :root:not([data-theme=light]){
+  --pa-bg:#0a0f15; --pa-surface:#121924; --pa-surface2:#1b2331; --pa-line:#273141;
+  --pa-ink:#eef1f5; --pa-ink2:#a7b3c0; --pa-ink3:#7a8593;
+  --pa-navy:#1d3e69; --pa-navy-ink:#f3f6fa;
+  --pa-accent:#e0b775; --pa-accent-soft:#241d12;
+  --pa-warn:#e6a878; --pa-ok:#7fcda4;
+  --pa-shadow:0 1px 2px rgba(0,0,0,.5), 0 14px 32px -20px rgba(0,0,0,.9);
+  color-scheme:dark;
+}}
+:root[data-theme=dark]{
+  --pa-bg:#0a0f15; --pa-surface:#121924; --pa-surface2:#1b2331; --pa-line:#273141;
+  --pa-ink:#eef1f5; --pa-ink2:#a7b3c0; --pa-ink3:#7a8593;
+  --pa-navy:#1d3e69; --pa-navy-ink:#f3f6fa;
+  --pa-accent:#e0b775; --pa-accent-soft:#241d12;
+  --pa-warn:#e6a878; --pa-ok:#7fcda4;
+  --pa-shadow:0 1px 2px rgba(0,0,0,.5), 0 14px 32px -20px rgba(0,0,0,.9);
+  color-scheme:dark;
+}
+
+
+/* ── kaart ───────────────────────────────────────────────────────── */
+.pa-kaarten .kaart {background:var(--pa-surface);border:1px solid var(--pa-line);border-radius:15px;
+  padding:14px;box-shadow:var(--pa-shadow)}
+.pa-kaarten .kop {display:flex;align-items:center;gap:9px;margin-bottom:9px}
+.pa-kaarten .kop .titel {font-size:12.5px;font-weight:600}
+.pa-kaarten .chip {font-family:"IBM Plex Mono",monospace;font-size:10.5px;text-transform:uppercase;
+  letter-spacing:.05em;color:var(--pa-accent);border:1px solid var(--pa-line);
+  border-radius:6px;padding:3px 6px;margin-left:auto;white-space:nowrap}
+
+.pa-kaarten .tijd {font-family:"IBM Plex Mono",monospace;font-size:clamp(28px,7vw,36px);
+  font-weight:500;letter-spacing:-.03em;line-height:1}
+.pa-kaarten .tijdrij {display:flex;align-items:baseline;gap:9px;margin-bottom:9px}
+.pa-kaarten .tijdrij .label {font-size:12.5px;color:var(--pa-ink2)}
+
+.pa-kaarten .feiten {display:flex;flex-wrap:wrap;gap:4px 16px;font-size:12.5px;margin-bottom:12px}
+.pa-kaarten .feiten .l {color:var(--pa-ink3)}
+.pa-kaarten .feiten .v {color:var(--pa-ink2)}
+
+.pa-kaarten .legs {border-top:1px solid var(--pa-line);padding-top:10px;display:grid;gap:5px}
+.pa-kaarten .leg {display:flex;align-items:center;gap:9px}
+.pa-kaarten .leg .tag {font-family:"IBM Plex Mono",monospace;font-size:10px;background:var(--pa-surface2);
+  color:var(--pa-ink2);min-width:44px;text-align:center;border-radius:6px;padding:3px 5px}
+.pa-kaarten .leg .wat {font-size:12.5px;flex:1;min-width:0}
+.pa-kaarten .leg .duur {font-family:"IBM Plex Mono",monospace;font-size:11.5px;color:var(--pa-ink3);white-space:nowrap}
+.pa-kaarten .leg.tank .tag {color:var(--pa-accent)}
+
+/* ── actieknoppen: dit is wat Design nog niet had ─────────────────── */
+.pa-kaarten .acties {display:flex;align-items:center;gap:7px;flex-wrap:wrap;
+  border-top:1px solid var(--pa-line);margin-top:12px;padding-top:12px}
+.pa-kaarten .knop {font:inherit;font-size:14px;font-weight:500;min-height:44px;padding:0 16px;
+  border-radius:11px;border:1px solid var(--pa-line);background:var(--pa-surface);
+  color:var(--pa-ink);cursor:pointer;display:inline-flex;align-items:center;gap:8px}
+.pa-kaarten .knop.primair {background:var(--pa-navy);color:var(--pa-navy-ink);border-color:transparent}
+/* Een knop die een link is (Navigeren, Deelnemen aan Teams) blijft een knop: geen streep eronder.
+   Ramin, 20-09: geen link-achtige klikbare tekst meer, keuzes als chip of knop. */
+a.knop {text-decoration:none}
+.pa-kaarten .knop.stil {min-height:38px;padding:0 12px;font-size:13px;color:var(--pa-ink2)}
+.pa-kaarten .modi {margin-left:auto;display:flex;gap:5px}
+.pa-kaarten .modi button {font:inherit;font-size:13px;min-height:44px;min-width:44px;padding:0 11px;
+  border-radius:11px;border:1px solid var(--pa-line);background:var(--pa-surface);
+  color:var(--pa-ink2);cursor:pointer}
+.pa-kaarten .modi button[aria-pressed=true] {border-color:var(--pa-accent);background:var(--pa-accent-soft);color:var(--pa-accent)}
+
+/* ── afspraak ────────────────────────────────────────────────────── */
+/* Een afspraak is een gewone witte kaart met een gekleurd balkje links: de agenda waar hij uit komt.
+   Zo doet de telefoon het ook (Ramin, 27-09). Stond hier als donker vlak. */
+.pa-kaarten .kaart.afspraak {border-left:4px solid var(--pa-kaartkleur,var(--pa-navy));padding-left:12px}
+.pa-kaarten .kaart.afspraak .soort {font-family:"IBM Plex Mono",monospace;font-size:10px;
+  text-transform:uppercase;letter-spacing:.09em;opacity:.75}
+.pa-kaarten .kaart.afspraak .waar {font-size:13px;opacity:.85;margin-top:3px}
+
+/* ── afspraak met de ritten erin (kaart 114, 2026-09-16) ─────────── */
+/* Licht, met de tweetijd-kop van de werkkaart; de stappen van de vluchtkaart. */
+.pa-kaarten .kaart.stappen .kop .knopjes {margin-left:auto;display:flex;gap:6px}
+.pa-kaarten .kaart.stappen .kop .knopjes .knop {min-height:36px;padding:0 12px;font-size:13px}
+.pa-kaarten .kaart.stappen .modi button {font-size:17px;line-height:1;display:inline-flex;align-items:center;justify-content:center}
+.pa-kaarten .kaart.stappen .stap .legs {border-top:0;padding-top:6px}
+
+/* ── vluchtketen ─────────────────────────────────────────────────── */
+.pa-kaarten .kaart.vlucht {border-color:var(--pa-accent)}
+.pa-kaarten .vluchtchip {font-family:"IBM Plex Mono",monospace;font-size:12.5px;
+  background:var(--pa-accent-soft);color:var(--pa-accent);border-radius:6px;padding:3px 7px}
+.pa-kaarten .vertraagd {margin-left:auto;color:var(--pa-warn);font-size:12.5px}
+.pa-kaarten .stap {display:flex;gap:12px;padding:8px 0;border-top:1px solid var(--pa-line)}
+.pa-kaarten .stap .st {font-family:"IBM Plex Mono",monospace;font-size:15px;min-width:52px;color:var(--pa-ink)}
+.pa-kaarten .stap .sl {font-size:13px;font-weight:500}
+.pa-kaarten .stap .ss {font-size:12px;color:var(--pa-ink2)}
+.pa-kaarten .vakken {display:grid;grid-template-columns:repeat(auto-fit,minmax(84px,1fr));gap:7px;margin-top:12px}
+.pa-kaarten .vak {background:var(--pa-surface2);border-radius:9px;padding:8px 10px}
+.pa-kaarten .vak .vl {font-family:"IBM Plex Mono",monospace;font-size:10px;text-transform:uppercase;
+  letter-spacing:.06em;color:var(--pa-ink3)}
+.pa-kaarten .vak .vv {font-family:"IBM Plex Mono",monospace;font-size:13.5px;color:var(--pa-ink)}
+.pa-kaarten .samengevouwen {font-size:12.5px;color:var(--pa-ink2);border-top:1px solid var(--pa-line);
+  padding-top:9px;margin-top:2px;display:flex;align-items:center;gap:9px}
+
+/* ── inklappen ───────────────────────────────────────────────────── */
+/* <details> en niet een eigen knop: werkt met het toetsenbord, werkt zonder
+   JavaScript, en een schermlezer weet vanzelf of het open staat. */
+.pa-kaarten details.vouw {border-top:1px solid var(--pa-line);padding-top:10px}
+.pa-kaarten details.vouw > summary {list-style:none;cursor:pointer;display:flex;align-items:center;gap:9px}
+.pa-kaarten details.vouw > summary::-webkit-details-marker {display:none}
+.pa-kaarten details.vouw > summary .sam {font-size:12.5px;color:var(--pa-ink2);flex:1;min-width:0}
+.pa-kaarten details.vouw > summary .pijl {font-size:11px;color:var(--pa-ink3);transition:transform .18s ease}
+.pa-kaarten details.vouw[open] > summary .pijl {transform:rotate(180deg)}
+.pa-kaarten details.vouw > .binnen {display:grid;gap:5px;padding-top:10px}
+@media (prefers-reduced-motion:reduce){
+.pa-kaarten details.vouw > summary .pijl {transition:none}
+}
+
+/* ── de stap waar je nú bent ─────────────────────────────────────── */
+.pa-kaarten .stap.gedaan {opacity:.45}
+.pa-kaarten .stap.gedaan .sl {font-weight:400}
+.pa-kaarten .stap.nu {background:var(--pa-accent-soft);border-radius:9px;padding:9px 10px;
+  margin:0 -10px;border-top-color:transparent}
+.pa-kaarten .stap.nu .sl {color:var(--pa-accent)}
+.pa-kaarten .nu-tag {font-family:"IBM Plex Mono",monospace;font-size:9.5px;text-transform:uppercase;
+  letter-spacing:.09em;color:var(--pa-accent);border:1px solid var(--pa-accent);
+  border-radius:5px;padding:1px 5px;margin-left:7px;white-space:nowrap}
+.pa-kaarten .band {background:var(--pa-ok);color:var(--pa-bg);border-radius:9px;padding:2px 9px;
+  font-family:"IBM Plex Mono",monospace;font-size:15px;display:inline-block}
+
+/* ── bezig ───────────────────────────────────────────────────────── */
+.pa-kaarten .kaart.bezig {border-color:var(--pa-ok);box-shadow:0 0 0 1px var(--pa-ok), var(--pa-shadow)}
+.pa-kaarten .loopt {display:inline-flex;align-items:center;gap:6px;font-family:"IBM Plex Mono",monospace;
+  font-size:10px;text-transform:uppercase;letter-spacing:.09em;color:var(--pa-ok)}
+.pa-kaarten .stip {width:7px;height:7px;border-radius:50%;background:var(--pa-ok);
+  animation:pols 2s ease-in-out infinite}
+@keyframes pols{0%,100%{opacity:1}50%{opacity:.35}}
+@media (prefers-reduced-motion:reduce){
+.pa-kaarten .stip {animation:none}
+}
+
+/* Twee getallen naast elkaar: hoe lang je bezig bent, en hoe lang je nog hebt.
+   Dat tweede is het getal waar je iets aan hebt — een teller alleen zegt niet
+   of je moet opschieten. */
+.pa-kaarten .tweetijd {display:flex;align-items:flex-start;gap:16px;margin-bottom:10px}
+.pa-kaarten .tweetijd .label {font-size:12px;color:var(--pa-ink2);margin-top:2px}
+.pa-kaarten .tweetijd .scheiding {width:1px;align-self:stretch;background:var(--pa-line)}
+.pa-kaarten .kaart.krap {border-color:var(--pa-warn);box-shadow:0 0 0 1px var(--pa-warn), var(--pa-shadow)}
+.pa-kaarten .loopt.krap {color:var(--pa-warn)}
+.pa-kaarten .loopt.krap .stip {background:var(--pa-warn)}
+
+/* ── de vraag bij vroeg vertrekken ───────────────────────────────── */
+.pa-kaarten .vraag {background:var(--pa-accent-soft);border:1px solid var(--pa-accent);border-radius:13px;
+  padding:13px 14px}
+.pa-kaarten .vraag.botst {border-color:var(--pa-warn)}
+.pa-kaarten .vraag .vt {font-size:14.5px;font-weight:500;margin-bottom:4px}
+.pa-kaarten .vraag .vs {font-size:12.5px;color:var(--pa-ink2);margin-bottom:11px}
+
+/* ── snel afvinken in de avondsamenvatting ───────────────────────── */
+.pa-kaarten .afvinklijst {display:grid;border-top:1px solid var(--pa-line);margin-top:2px}
+.pa-kaarten .afvink {display:flex;align-items:center;gap:10px;padding:6px 4px;cursor:pointer;
+  border-radius:7px;line-height:1.25}
+.pa-kaarten .afvink + .afvink {border-top:1px solid var(--pa-line)}
+.pa-kaarten .afvink:hover {background:var(--pa-surface2)}
+.pa-kaarten .afvink input {width:19px;height:19px;accent-color:var(--pa-navy);flex:none}
+.pa-kaarten .afvink .at {font-family:"IBM Plex Mono",monospace;font-size:12px;color:var(--pa-ink3);min-width:42px}
+.pa-kaarten .afvink .aw {font-size:13px;flex:1;min-width:0}
+.pa-kaarten .afvink .ad {font-size:11.5px;color:var(--pa-ink3);white-space:nowrap}
+.pa-kaarten .afvink:has(input:checked) .aw {text-decoration:line-through;color:var(--pa-ink3)}
+
+/* Een afspraak bínnen de werkkaart houdt zijn eigen knoppen. Ramin,
+   2026-09-12: "binnen de work card kunnen belafspraken staan, die moeten dan
+   wel de CALL-button krijgen, enzo (ook andere functies)." Klopt: hij staat
+   daar niet als regel tekst maar als afspraak, en een afspraak die je moet
+   bellen bel je vanaf de plek waar hij staat. */
+/* Tik je binnen de kaart op een afspraak, dan schuiven de details eruit — de
+   rit ernaartoe, de afspraak zelf, de rit terug. Ramin, 2026-09-12: "als je
+   binnen de kaart op een afspraak klikt, details uitschuiven, zoals de travel
+   naar de klanten terug." */
+.pa-kaarten details.stapvouw > summary {list-style:none;cursor:pointer}
+.pa-kaarten details.stapvouw > summary::-webkit-details-marker {display:none}
+.pa-kaarten details.stapvouw > summary .pijl {font-size:11px;color:var(--pa-ink3);transition:transform .18s ease;display:inline-block}
+.pa-kaarten details.stapvouw[open] > summary .pijl {transform:rotate(180deg)}
+.pa-kaarten details.stapvouw > .stapbinnen {display:grid;gap:5px;padding:2px 0 10px 64px}
+@media (prefers-reduced-motion:reduce){
+.pa-kaarten details.stapvouw > summary .pijl {transition:none}
+}
+
+.pa-kaarten .stap .mini {display:flex;gap:6px;flex-wrap:wrap;margin-top:6px}
+.pa-kaarten .stap .mini button {font:inherit;font-size:12px;min-height:32px;padding:0 10px;
+  border-radius:9px;border:1px solid var(--pa-line);background:var(--pa-surface);
+  color:var(--pa-ink);cursor:pointer;display:inline-flex;align-items:center;gap:6px}
+.pa-kaarten .stap .mini button.primair {background:var(--pa-navy);color:var(--pa-navy-ink);border-color:transparent}
+
+/* ── werk ─────────────────────────────────────────────────────────
+   Dezelfde ketengedachte als de vlucht, maar dan je werkdag: de rit
+   ernaartoe, je uren, wat daarbinnen gebeurt, en de rit terug. Een eigen
+   randkleur zodat je hem in een lange dag meteen terugvindt. */
+.pa-kaarten .kaart.werk {border-color:var(--pa-navy)}
+/* De keuze kantoor/thuis even hoog als het chipje ernaast (Ramin, 2026-09-12:
+   "kan je de knoppen van thuiswerk/kantoor net zo hoog maken als
+   [KLANTBEZOEK]"). Die 44 punten zijn er voor knoppen waar je met je duim naar
+   mikt; hier is het een schakelaartje in een kop, en dan duwt die hoogte de
+   hele regel uit elkaar. */
+.pa-kaarten .kaart.werk .kop .modi button {min-height:24px;min-width:28px;padding:0 7px;font-size:12.5px;
+  border-radius:7px;line-height:1}
+.pa-kaarten .kaart.werk .stap:first-of-type {border-top:0}
+
+/* ── gemiste aansluiting ─────────────────────────────────────────── */
+.pa-kaarten .kaart.gemist {border-color:var(--pa-warn)}
+.pa-kaarten .waarschuwing {color:var(--pa-warn);font-size:12.5px;display:flex;align-items:center;gap:7px;
+  margin-bottom:10px}
+
+/* ── gat en notitie ──────────────────────────────────────────────── */
+.pa-kaarten .kaart.notitie {border-style:dashed;box-shadow:none}
+.pa-kaarten .kaart.notitie .tagje {font-family:"IBM Plex Mono",monospace;font-size:10px;
+  text-transform:uppercase;letter-spacing:.06em;color:var(--pa-ink3)}
+.pa-kaarten .compact {display:flex;align-items:center;gap:12px;background:var(--pa-surface);
+  border:1px solid var(--pa-line);border-radius:11px;padding:10px 12px}
+.pa-kaarten .compact .ct {font-family:"IBM Plex Mono",monospace;font-size:13px;min-width:52px}
+.pa-kaarten .compact .cw {flex:1;font-size:13px}
+.pa-kaarten .compact .cd {font-family:"IBM Plex Mono",monospace;font-size:11.5px;color:var(--pa-ink3)}
+
+
+/* De vraag van de planner IN de kaart waar hij over gaat, als gekleurd vlak onderin -- zoals op de
+   telefoon (RegelKaarten.kt regel 2185, Ramin 22-09). Stond op het web als losse kaart ernaast. */
+.pa-vraagvlak {
+	margin-top: 10px;
+	padding: 12px;
+	border-radius: 10px;
+	background: var(--pa-vraag-vlak, rgba(19, 41, 74, 0.07));
+}
+.pa-vraagvlak__zin {
+	font-weight: 600;
+	font-size: 0.95em;
+	margin-bottom: 6px;
+}
+.pa-vraagvlak .acties {
+	border-top: 0;
+	padding-top: 0;
+	margin-top: 0;
+}
+
+/* Hoe het echt ging, op een losse kaart -- zelfde vorm als in een blok. */
+.pa-echt {
+	margin-top: 10px;
+	padding-top: 8px;
+	border-top: 1px solid var(--pa-lijn, rgba(0, 0, 0, 0.08));
+}
+.pa-echt__kop {
+	font-size: 0.8em;
+	opacity: 0.7;
+	margin-bottom: 4px;
+}
+
+/* De rek tussen de app-knop links en "Laat weten" rechts. */
+.pa-rek { flex: 1 1 auto; }
